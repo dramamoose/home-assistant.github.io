@@ -16,7 +16,7 @@ The `recorder` component is storing details in a database which then are handled
 
 Home Assistant uses [SQLAlchemy](http://www.sqlalchemy.org/) as Object Relational Mapper (ORM). This means that you can now use **any** SQL backend for the recorder that is supported by SQLAlchemy, like [MySQL](https://www.mysql.com/), [MariaDB](https://mariadb.org/), or [PostgreSQL](https://www.postgresql.org/).
 
-The default database engine is [SQLite](https://www.sqlite.org/) which doesn't require any configuration. The database is stored in your Home Assistant configuration directory (`.homeassistant`) and called `home-assistant.db`.
+The default database engine is [SQLite](https://www.sqlite.org/) which doesn't require any configuration. The database is stored in your Home Assistant configuration directory (`.homeassistant`) and called `home-assistant_v2.db`.
 
 To setup the `recorder` component in your installation, add the following to your `configuration.yaml` file:
 
@@ -90,8 +90,8 @@ If you only want to hide events from e.g. your history, take a look at the [`his
 | Database engine | `db_url`                                                 | 
 | :---------------|:---------------------------------------------------------|
 | SQLite          | `sqlite:///PATH/TO/DB_NAME`                              |
-| MySQL           | `mysql://SERVER_IP/DB_NAME`                              |
-| MySQL           | `mysql://user:password@SERVER_IP/DB_NAME`                |
+| MySQL           | `mysql+pymysql://SERVER_IP/DB_NAME`                      |
+| MySQL           | `mysql+pymysql://user:password@SERVER_IP/DB_NAME`        |
 | PostgreSQL      | `postgresql://SERVER_IP/DB_NAME`                         |
 | PostgreSQL      | `postgresql://scott:tiger@SERVER_IP/DB_NAME`             |
 
@@ -105,7 +105,16 @@ For MySQL you may have to install a few dependencies:
 
 ```bash
 $ sudo apt-get install libmysqlclient-dev
-$ pip3 install mysqlclient
+$ pip3 install pymysql
+```
+If you are in a virtual environment, don't forget to activate it before installing the pymysql package.
+
+```bash
+pi@homeassistant:~ $ sudo -i
+root@homeassistant:~# su homeassistant  
+homeassistant@homeassistant:/root$ cd /srv/homeassistant/homeassistant_venv/
+homeassistant@homeassistant:/srv/homeassistant/homeassistant_venv$ source bin/activate
+(homeassistant_venv) homeassistant@homeassistant:/srv/homeassistant/homeassistant_venv$ pip3 install pymysql
 ```
 
 ### {% linkable_title PostgreSQL %}
